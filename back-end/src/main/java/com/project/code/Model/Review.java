@@ -6,7 +6,8 @@ public class Review {
 //    - Type: private Long
 //    - This field represents the customer who created the review.
 //    - This field cannot be empty, use the @NotNull annotation to enforce this rule.
-
+    @Id
+    @Generated
 // 2. Add 'productId' field:
 //    - Type: private Long
 //    - This field represents the product being reviewed.
