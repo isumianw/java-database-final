@@ -1,17 +1,23 @@
 package com.project.code.Controller;
 
+import com.project.code.Repo.InventoryRepository;
+import com.project.code.Repo.OrderItemRepository;
+
+@RestController
+@RequestMapping("/product")
 public class ProductController {
-// 1. Set Up the Controller Class:
-//    - Annotate the class with `@RestController` to designate it as a REST controller for handling HTTP requests.
-//    - Map the class to the `/product` URL using `@RequestMapping("/product")`.
 
+    @Autowired
+    private ProductRepository productRepository;
 
-// 2. Autowired Dependencies:
-//    - Inject the following dependencies via `@Autowired`:
-//        - `ProductRepository` for CRUD operations on products.
-//        - `ServiceClass` for product validation and business logic.
-//        - `InventoryRepository` for managing the inventory linked to products.
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
+    @Autowired
+    private ServiceClass serviceClass;
+
+    @Autowired
+    private InventoryRepository inventoryRepository;
 
 // 3. Define the `addProduct` Method:
 //    - Annotate with `@PostMapping` to handle POST requests for adding a new product.
@@ -19,7 +25,17 @@ public class ProductController {
 //    - Validate product existence using `validateProduct()` in `ServiceClass`.
 //    - Save the valid product using `save()` method of `ProductRepository`.
 //    - Catch exceptions (e.g., `DataIntegrityViolationException`) and return appropriate error message.
-
+    @PostMapping
+    public Map<String, String> addProduct(@RequestBody Product product) {
+        Map<String, String> map =  new HashMap<>();
+        if (!serviceClass.validateProduct(product.getId())) {
+            map.put("message", "Product already present in the database");
+            return map;
+        } else {
+            productRepository.save(product);
+            
+        }
+    }
 
 // 4. Define the `getProductbyId` Method:
 //    - Annotate with `@GetMapping("/product/{id}")` to handle GET requests for retrieving a product by ID.
