@@ -141,7 +141,7 @@ public class InventoryController {
             map.put("message", "Id " + id + " not present in database");
             return map;
         }
-        inventoryRepo sitory.deleteByProductId(id);
+        inventoryRepository.deleteByProductId(id);
         map.put("message", "Deleted product successfully with id: " + id);
         return map;
     }
@@ -154,5 +154,7 @@ public class InventoryController {
             return true;
         }
         return false;
+
     }
+
 }
